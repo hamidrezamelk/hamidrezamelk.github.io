@@ -171,9 +171,8 @@ if(matchMedia('(display-mode: standalone)').matches||navigator.standalone)return
 if(dp){b.style.display='block';b.innerHTML='<b>افزودن به صفحه اصلی گوشی</b><button id="ib">نصب ملک‌سنج</button>';$('ib').onclick=async()=>{dp.prompt();await dp.userChoice;dp=null;b.style.display='none'}}
 else if(/iPhone|iPad|iPod/.test(navigator.userAgent)){b.style.display='block';b.innerHTML='<b>افزودن به صفحه اصلی گوشی</b><small>در سافاری دکمه‌ی اشتراک‌گذاری (Share) را بزنید و Add to Home Screen را انتخاب کنید.</small>'}}
 function admin(){
-if($('adm'))return;
 const days=S.updatedISO?Math.floor((Date.now()-new Date(S.updatedISO))/864e5):null;
-const d=document.createElement('div');d.className='card adm';d.id='adm';
+const d=document.createElement('div');d.className='card adm';
 d.innerHTML=`<b>پنل مدیریت</b> <span class="lb">(فقط وقتی آدرس با #admin تمام شود دیده می‌شود)</span>
 ${days!==null&&days>=7?`<div class="warn">قیمت‌ها ${fa(days)} روز است به‌روز نشده‌اند.</div>`:''}
 <h3>قیمت هر متر ملک نوساز (میلیون تومان)</h3>
@@ -202,9 +201,7 @@ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['window
 }
 render();
 if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))navigator.serviceWorker.register('sw.js').catch(()=>{});
-const openAdm=()=>{if(location.hash==='#admin'||/[?&]admin/.test(location.search))admin()};
-openAdm();window.addEventListener('hashchange',openAdm);
-(()=>{let n=0,t;const f=document.querySelector('.foot');if(f)f.addEventListener('click',()=>{n++;clearTimeout(t);t=setTimeout(()=>{n=0},3000);if(n>=5){n=0;admin();const a=$('adm');if(a)a.scrollIntoView({behavior:'smooth'})}})})();
+if(location.hash==='#admin')admin();
 </script>
 </body>
 </html>
